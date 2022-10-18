@@ -2,9 +2,17 @@
 
 // Create array
 
+$fruts = ["banana", "apple", "orange"];
+
 // Print the whole array
 
+ echo '<pre>';
+ var_dump($fruts);
+ echo '</pre>';
+
 // Get element by index
+
+echo $fruts[0].'<br>';
 
 // Set element by index
 

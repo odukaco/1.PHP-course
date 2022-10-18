@@ -4,7 +4,7 @@
 $a = 5;
 $b = 4;
 $c = 1.2;
-// Arithmetic operations
+// Arithmetic operddations
 //aa
 // Assignment with math operators
 

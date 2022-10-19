@@ -79,7 +79,9 @@ $person = [
 ];
 
 
-echo $person['name'];
+echo $person['name'].'<br>';
+echo $person['surname'];
+echo $person['age'];
 
 // Get element by key
 

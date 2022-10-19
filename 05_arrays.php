@@ -79,12 +79,12 @@ $person = [
 ];
 
 
-echo $person['name'].'<br>';
-echo $person['surname'];
-echo $person['age'];
+
 
 // Get element by key
-
+echo $person['name'].'<br>';
+echo $person['surname'].'<br>';
+echo $person['age'].'<br>';
 // Set element by key
 
 // Check if array has specific key

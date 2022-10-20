@@ -112,3 +112,12 @@ var_dump($person);
 echo '</pre>';
 
 // Two dimensional arrays
+$todoItems = [
+    ["title" => "item1", "completed" => true ],
+    ["title" => "item2", "completed" => false ],
+    ["title" => "item3", "completed" => true ],
+];
+
+echo '<pre>';
+var_dump($todoItems);
+echo '</pre>';

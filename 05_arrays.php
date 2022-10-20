@@ -87,13 +87,28 @@ echo $person['surname'].'<br>';
 echo $person['age'].'<br>';
 // Set element by key
 
-// Check if array has specific key
+$person['channel'] = 'TraversyMedia';
 
+// Check if array has specific key
+isset($person['age']);//true
+isset($person['addres']);//false
 // Print the keys of the array
+
+echo '<pre>';
+var_dump(array_keys($person));
+echo '</pre>';
 
 // Print the values of the array
 
-// Sorting associative arrays by values, by keys
+echo '<pre>';
+var_dump(array_values($person));
+echo '</pre>';
 
+// Sorting associative arrays by values, by keys
+arsort($person);
+
+echo '<pre>';
+var_dump($person);
+echo '</pre>';
 
 // Two dimensional arrays

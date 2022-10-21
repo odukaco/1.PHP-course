@@ -1,5 +1,6 @@
 <?php
-
+define('REQUIRED_FIELD_ERROR','This field is required');
+$errors = [];
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     $username = post_data('username');
@@ -7,9 +8,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     $password = post_data('password');
     $pasword_confirm = post_data('password_confirm');
     $cv_url = post_data('cv_url');
-    echo'<pre>';
-    var_dump($username, $email, $password, $pasword_confirm, $cv_url);
-    echo'</pre>';
+    // echo'<pre>';
+    // var_dump($username, $email, $password, $pasword_confirm, $cv_url);
+    // echo'</pre>';
 }
 
 function post_data($field)
@@ -17,6 +18,29 @@ function post_data($field)
     $_POST[$field] ??= '';
     return htmlspecialchars(stripslashes($_POST[$field]));
 
+}
+if(!$username)
+{
+    $errors['username'] = REQUIRED_FIELD_ERROR;
+}
+if(!$email)
+{
+    $errors['email'] = REQUIRED_FIELD_ERROR;
+}else if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+{
+    $errors['email'] = 'not valid email';
+}
+if(!$password)
+{
+    $errors['password'] = REQUIRED_FIELD_ERROR;
+}
+if(!$pasword_confirm)
+{
+    $errors['password_confirm'] = REQUIRED_FIELD_ERROR;
+}
+if(!$cv_url)
+{
+    $errors['cv_url'] = REQUIRED_FIELD_ERROR;
 }
 
 
@@ -41,15 +65,22 @@ function post_data($field)
         <div class="col">
             <div class="form-group">
                 <label>Username</label>
-                <input class="form-control"
+                <input class="form-control <?php echo isset($errors['username']) ? 'is-invalid':''   ?>"
                        name="username">
                 <small class="form-text text-muted">Min: 6 and max 16 characters</small>
+                <div class="invalid-feedback">
+                    <?php echo $errors['username'] ?? '' ?>
+                </div>
             </div>
         </div>
         <div class="col">
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" class="form-control" name="email">
+                <input type="email" class="form-control <?php echo isset($errors['email']) ? 'is-invalid':''   ?>" 
+                name="email">
+                <div class="invalid-feedback">
+                    <?php echo $errors['email'] ?? '' ?>
+                </div>
             </div>
         </div>
     </div>
@@ -57,24 +88,33 @@ function post_data($field)
         <div class="col">
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control"
+                <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid':''   ?>"
                        name="password">
+                       <div class="invalid-feedback">
+                    <?php echo $errors['password'] ?? '' ?>
+                </div>
             </div>
         </div>
         <div class="col">
             <div class="form-group">
                 <label>Repeat Password</label>
                 <input type="password"
-                       class="form-control"
+                       class="form-control <?php echo isset($errors['password_confirm']) ? 'is-invalid':''   ?>"
                        name="password_confirm">
+                       <div class="invalid-feedback">
+                    <?php echo $errors['password_confirm'] ?? '' ?>
+                </div>
             </div>
         </div>
     </div>
     <div class="form-group">
         <div class="form-group">
             <label>Your CV link</label>
-            <input type="text" class="form-control"
+            <input type="text" class="form-control <?php echo isset($errors['cv_url']) ? 'is-invalid':''   ?>"
                    name="cv_url" placeholder="https://www.example.com/my-cv"/>
+                   <div class="invalid-feedback">
+                    <?php echo $errors['cv_link'] ?? '' ?>
+                </div>
         </div>
     </div>
 

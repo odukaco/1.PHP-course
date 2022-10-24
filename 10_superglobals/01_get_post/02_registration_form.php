@@ -1,16 +1,21 @@
 <?php
 define('REQUIRED_FIELD_ERROR','This field is required');
 $errors = [];
+$username='';
+$email='';
+$password='';
+$password_confirm='';
+$cv_url='';
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     $username = post_data('username');
     $email = post_data('email');
     $password = post_data('password');
-    $pasword_confirm = post_data('password_confirm');
+    $password_confirm = post_data('password_confirm');
     $cv_url = post_data('cv_url');
-    // echo'<pre>';
-    // var_dump($username, $email, $password, $pasword_confirm, $cv_url);
-    // echo'</pre>';
+    echo'<pre>';
+    var_dump($username, $email, $password, $password_confirm, $cv_url);
+    echo'</pre>';
 }
 
 function post_data($field)
@@ -22,25 +27,36 @@ function post_data($field)
 if(!$username)
 {
     $errors['username'] = REQUIRED_FIELD_ERROR;
+}elseif (strlen($username)<6 || strlen($username)>16)
+{
+    $errors['username']='Username must be in between 6 and 16 characters';
 }
 if(!$email)
 {
     $errors['email'] = REQUIRED_FIELD_ERROR;
 }else if(!filter_var($email, FILTER_VALIDATE_EMAIL))
 {
-    $errors['email'] = 'not valid email';
+    $errors['email'] = 'Not valid email';
 }
 if(!$password)
 {
     $errors['password'] = REQUIRED_FIELD_ERROR;
 }
-if(!$pasword_confirm)
+if(!$password_confirm)
 {
     $errors['password_confirm'] = REQUIRED_FIELD_ERROR;
 }
-if(!$cv_url)
+if($cv_url && !filter_var($cv_url, FILTER_VALIDATE_URL))
 {
-    $errors['cv_url'] = REQUIRED_FIELD_ERROR;
+    $errors['cv_url'] = 'Please provide a valide link';
+}
+if($password && $password_confirm && strcmp($password,$password_confirm) !==0)
+{
+    $errors['password_confirm']='Passwords must mach';
+}
+if(empty($errors))
+{
+    echo 'everything is good'.'<br>';
 }
 
 
@@ -66,7 +82,7 @@ if(!$cv_url)
             <div class="form-group">
                 <label>Username</label>
                 <input class="form-control <?php echo isset($errors['username']) ? 'is-invalid':''   ?>"
-                       name="username">
+                       name="username" value="<?php echo $username ?>">
                 <small class="form-text text-muted">Min: 6 and max 16 characters</small>
                 <div class="invalid-feedback">
                     <?php echo $errors['username'] ?? '' ?>
@@ -77,7 +93,7 @@ if(!$cv_url)
             <div class="form-group">
                 <label>Email</label>
                 <input type="email" class="form-control <?php echo isset($errors['email']) ? 'is-invalid':''   ?>" 
-                name="email">
+                name="email" value="<?php echo $email ?>">
                 <div class="invalid-feedback">
                     <?php echo $errors['email'] ?? '' ?>
                 </div>
@@ -89,7 +105,7 @@ if(!$cv_url)
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid':''   ?>"
-                       name="password">
+                       name="password" value="<?php echo $password ?>">
                        <div class="invalid-feedback">
                     <?php echo $errors['password'] ?? '' ?>
                 </div>
@@ -100,7 +116,7 @@ if(!$cv_url)
                 <label>Repeat Password</label>
                 <input type="password"
                        class="form-control <?php echo isset($errors['password_confirm']) ? 'is-invalid':''   ?>"
-                       name="password_confirm">
+                       name="password_confirm" value="<?php echo $password_confirm ?>">
                        <div class="invalid-feedback">
                     <?php echo $errors['password_confirm'] ?? '' ?>
                 </div>
@@ -111,7 +127,7 @@ if(!$cv_url)
         <div class="form-group">
             <label>Your CV link</label>
             <input type="text" class="form-control <?php echo isset($errors['cv_url']) ? 'is-invalid':''   ?>"
-                   name="cv_url" placeholder="https://www.example.com/my-cv"/>
+                   name="cv_url" value="<?php echo $cv_url ?>" placeholder="https://www.example.com/my-cv"/>
                    <div class="invalid-feedback">
                     <?php echo $errors['cv_link'] ?? '' ?>
                 </div>

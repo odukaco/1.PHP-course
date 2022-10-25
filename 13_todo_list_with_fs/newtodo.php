@@ -11,7 +11,7 @@ if($todoName){
         $json = file_get_contents('todo.json');
         $jsonArray = json_decode($json,true);
     }
-    $jsonArray[$todoName] = ['completed' => false]; 
+    $jsonArray[$todoName]['completed'] = false;  
     // echo '<pre>';
     // var_dump($jsonArray);
     // echo '</pre>';

@@ -1,4 +1,17 @@
 <?php
+
+$connection= require_once './Connection.php';
+
+$notes = $connection->getNotes();
+
+// echo '<pre>';
+//  var_dump($notes);
+//  echo '</pre>';
+
+if(isset($_GET['id'])){
+    $currentNote=$connection->getNoteById($_GET['id']);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -19,16 +32,18 @@
         <button>New note</button>
     </form>
     <div class="notes">
+    <?php foreach($notes as $note): ?>
         <div class="note">
             <div class="title">
-                <a href="">Sample note</a>
+                <a href=""><?php echo $note['title'] ?></a>
             </div>
             <div class="description">
-                Sample note description
+            <?php echo $note['description'] ?>
             </div>
-            <small>15/02/20 19:00:00</small>
+            <small><?php echo $note['create_date'] ?></small>
             <button class="close">X</button>
         </div>
+    <?php endforeach; ?>
     </div>
 </div>
 </body>

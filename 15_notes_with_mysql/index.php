@@ -28,7 +28,7 @@ if(isset($_GET['id'])){
 </head>
 <body>
 <div>
-    <form class="new-note" action="create.php" method="post">
+    <form class="new-note" action="save.php" method="post">
         <input type="text" name="title" placeholder="Note title" autocomplete="off"
         <?php echo $currentNote['title'] ?>>
         <textarea name="description" cols="30" rows="4"
